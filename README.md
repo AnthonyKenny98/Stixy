@@ -1,5 +1,4 @@
-# Stixy &middot; [![Known Vulnerabilities](https://snyk.io/test/github/AnthonyKenny98/Stixy/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AnthonyKenny98/Stixy?targetFile=requirements.txt) [![Build Status](https://travis-ci.org/AnthonyKenny98/Stixy.svg?branch=master)](https://travis-ci.org/AnthonyKenny98/Stixy)[![codecov](https://codecov.io/gh/AnthonyKenny98/Stixy/branch/master/graph/badge.svg)](https://codecov.io/gh/AnthonyKenny98/Stixy) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
-
+# Stixy 
 <!--- (DO NOT REMOVE) Begin:RepoDesc --->
 A Double Entry Accounting System Built in Django
 
