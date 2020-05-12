@@ -1,7 +1,7 @@
-# PythonTemplate &middot; [![Known Vulnerabilities](https://snyk.io/test/github/AnthonyKenny98/PythonTemplate/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AnthonyKenny98/PythonTemplate?targetFile=requirements.txt) [![Build Status](https://travis-ci.org/AnthonyKenny98/PythonTemplate.svg?branch=master)](https://travis-ci.org/AnthonyKenny98/PythonTemplate)[![codecov](https://codecov.io/gh/AnthonyKenny98/PythonTemplate/branch/master/graph/badge.svg)](https://codecov.io/gh/AnthonyKenny98/PythonTemplate) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
+# Stixy &middot; [![Known Vulnerabilities](https://snyk.io/test/github/AnthonyKenny98/Stixy/badge.svg?targetFile=requirements.txt)](https://snyk.io/test/github/AnthonyKenny98/Stixy?targetFile=requirements.txt) [![Build Status](https://travis-ci.org/AnthonyKenny98/Stixy.svg?branch=master)](https://travis-ci.org/AnthonyKenny98/Stixy)[![codecov](https://codecov.io/gh/AnthonyKenny98/Stixy/branch/master/graph/badge.svg)](https://codecov.io/gh/AnthonyKenny98/Stixy) ![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)
 
 <!--- (DO NOT REMOVE) Begin:RepoDesc --->
-This is where your project description will go. Click [here](scripts/setup/repo/README.md) for details on how to quickly customize your repo.
+A Double Entry Accounting System Built in Django
 
 <!--- (DO NOT REMOVE) End:RepoDesc --->
 
@@ -17,8 +17,8 @@ This is where your project description will go. Click [here](scripts/setup/repo/
 
 ### Checkout the Code 
   ```
-  $ git clone git@github.com:AnthonyKenny98/PythonTemplate.git
-  $ cd PythonTemplate
+  $ git clone git@github.com:AnthonyKenny98/Stixy.git
+  $ cd Stixy
   ```
 ### Create and Init Virtual Environment
   ```

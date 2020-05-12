@@ -7,6 +7,7 @@ install:
   - pip install -r requirements.txt
 # command to run tests
 script:
+  - coverage run stixy/manage.py test
   - python3 -m pytest --flake8
 # disable notifications
 notifications:

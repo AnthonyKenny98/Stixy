@@ -1,0 +1,14 @@
+{% extends 'accounting/base.html' %}
+
+{% block mainContainer %}
+
+{% if list %}
+    <ul>
+    {% block listitems %}
+    {% endblock %}
+    </ul>
+{% else %}
+    <p>No entries are available.</p>
+{% endif %}
+
+{% endblock %}

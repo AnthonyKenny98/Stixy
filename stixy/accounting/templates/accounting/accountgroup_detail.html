@@ -1,0 +1,7 @@
+{% extends 'accounting/detail.html' %}
+
+{% block list %}
+    <li> Name: {{ item.name }} </li>
+    <li> Account Class: {{ item.account_class.name}} </li>
+    <li> Positive Entry: {{ item.account_class.positive_entry}} </li>
+{% endblock %}
