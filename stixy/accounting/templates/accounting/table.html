@@ -1,6 +1,49 @@
 {% extends 'accounting/base.html' %}
 
 <!-- Scripts for table -->
+
+{% block mainContainer %}
+<div id="content-wrapper">
+  <div class="container-fluid">
+  
+    <!-- CARD -->
+    <div class="card mb-3">
+      
+      <!-- CARD HEADER -->
+      <div class="card-header">
+        <i class="fas fa-table"></i>
+        {{ tableName }}
+      </div>
+
+      <!-- CARD BODY -->
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+            <thead>
+                <tr>
+                    <td>PK</td>
+                    <td>Name</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in data %}
+                <tr class="row-clickable" data-href="{% url 'accounting:detail' item.get_cname item.id %}">
+                    <td> {{ item.id }}</td>
+                    <td> {{ item.name }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+{% endblock %}
+
+
 {% block scripts %}
   {{ block.super }}
 

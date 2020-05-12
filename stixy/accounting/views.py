@@ -13,6 +13,15 @@ def index(request):
     context = {}
     return render(request, 'accounting/index.html', context)
 
+
+def table(request, model):
+    Model = getattr(sys.modules[__name__], model)
+    context = {
+        'tableName': Model.__name__,
+        'data': Model.objects.order_by('name')
+    }
+    return render(request, 'accounting/table.html', context)
+
 def list(request, model):
 
     # Get Model Class from model param
