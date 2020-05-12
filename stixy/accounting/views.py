@@ -5,31 +5,24 @@ from django.views import generic
 
 from .models import AccountClass, AccountGroup
 
+import sys
+
+
 
 def index(request):
     context = {}
     return render(request, 'accounting/index.html', context)
 
+def list(request, model):
 
-class AccountClassList(generic.ListView):
-    context_object_name = 'list'
+    # Get Model Class from model param
+    Model = getattr(sys.modules[__name__], model)
+    context = {'list': Model.objects.order_by('name')}
+    return render(request, 'accounting/list.html', context)
 
-    def get_queryset(self):
-        return AccountClass.objects.order_by('name')
+def detail(request, model, pk):
 
-
-class AccountClassDetail(generic.DetailView):
-    model = AccountClass
-    context_object_name = 'item'
-
-
-class AccountGroupList(generic.ListView):
-    context_object_name = 'list'
-
-    def get_queryset(self):
-        return AccountGroup.objects.order_by('name')
-
-
-class AccountGroupDetail(generic.DetailView):
-    model = AccountGroup
-    context_object_name = 'item'
+    # Get Model Class from model param
+    Model = getattr(sys.modules[__name__], model)
+    context = {'item': Model.objects.get(pk=pk)}
+    return render(request, 'accounting/detail.html', context)
