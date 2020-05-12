@@ -1,7 +1,9 @@
-{% extends 'accounting/list.html' %}
+{% extends 'accounting/base.html' %}
 
-{% block listitems %}
+{% block mainContainer %}
+<ul>
     {% for item in list %}
     <li><a href="{% url 'accounting:account_class' item.id%}">{{ item.name }}</a></li>
     {% endfor %}
+</ul>
 {% endblock %}

@@ -1,6 +1,19 @@
-{% extends 'accounting/detail.html' %}
+{% extends 'accounting/base.html' %}
 
-{% block list %}
+{% block breadcrumbs %}
+    <!-- Past Pages -->
+    <li class="breadcrumb-item">
+      <a href="#">Accounting</a>
+    </li>
+    <!-- This Page -->
+    <li class="breadcrumb-item active">
+      Account Classes
+    </li>
+{% endblock %}
+
+{% block mainContainer %}
+<ul>
     <li> Name: {{ item.name }} </li>
     <li> Positive Entry: {{ item.positive_entry}} </li>
+</ul>
 {% endblock %}

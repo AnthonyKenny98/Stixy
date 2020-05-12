@@ -1,0 +1,14 @@
+{% extends 'accounting/base.html' %}
+
+<!-- Scripts for table -->
+{% block scripts %}
+  {{ block.super }}
+
+  <!-- Page level plugin JavaScript-->
+  <script src="/static/accounting/vendor/datatables/jquery.dataTables.js"></script>
+  <script src="/static/accounting/vendor/datatables/dataTables.bootstrap4.js"></script>
+
+  <!-- Demo scripts for this page-->
+  <script src="/static/accounting/js/demo/datatables-demo.js"></script>
+
+{% endblock %}

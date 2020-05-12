@@ -10,8 +10,6 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>{% block title %} Accounting {% endblock %}</title>
-
   <!-- Custom fonts for this template-->
   <link href="/static/accounting/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
@@ -24,21 +22,25 @@
   <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="/img/favicon.ico" type="image/x-icon">
 
+  <!-- Page Title -->
+  <title>{% block title %} Accounting {% endblock %}</title>
+
 </head>
 
-{% block body %}
+<!-- Body -->
 <body id="page-top">
 
   {% block navbar %}
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand navbar-dark bg-dark static-top">
 
-    <a class="navbar-brand mr-1" href="/">Accounting</a>
+    <a class="navbar-brand mr-1" href="{% url 'accounting:index' %}">Accounting</a>
 
-    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle" href="#">
+    <button class="btn btn-link btn-sm text-white order-1 order-sm-0" id="sidebarToggle">
       <i class="fas fa-bars"></i>
     </button>
   </nav>
+
   {% endblock %}
 
   {% block content %}
@@ -66,41 +68,29 @@
           <a class="dropdown-item" href="404.html">404 Page</a>
         </div>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Records</span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-          <h6 class="dropdown-header">Coming Soon</h6>
-         <!--  <a class="dropdown-item" href="/inventory_count">List Counts</a>
-          <a class="dropdown-item" href="/">New Count</a>
-          <div class="dropdown-divider"></div>
-          <h6 class="dropdown-header">Other Pages:</h6>
-          <a class="dropdown-item" href="404.html">404 Page</a>
-          <a class="dropdown-item active" href="blank.html">Blank Page</a> -->
-        </div>
-      </li>
-      
-      <!-- <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li> -->
+     
     </ul>
 
-    {% block mainContainer %}{% endblock %}
+    <div class="container-fluid">
+      
+      <ol class="breadcrumb">
+      {% block breadcrumbs %}
+      
+      {% endblock %}
+      </ol>
+
+      <div class="row">
+        {% block mainContainer %}
+          This is the main container. Overwrite in extending html doc.
+        {% endblock %}
+      </div>
+    </div>
 
   </div> 
 
-  {% endblock %}
+{% endblock %}
 
-      <!-- Sticky Footer -->
+ <!-- Sticky Footer -->
   <footer class="sticky-footer">
     <div class="container my-auto">
       <div class="copyright text-center my-auto">
@@ -125,8 +115,8 @@
   <script src="/static/accounting/js/sb-admin.min.js"></script>
   {% endblock %}
 
+<!-- End Body -->
 </body>
-{% endblock %}
 
-
+<!-- End Doc -->
 </html>
