@@ -16,11 +16,11 @@ class Accounting(models.Model):
 
     def __iter__(self):
         """Iterate through attributes of Class."""
-        for attr, value in self.__dict__.iteritems():
-            if "__" not in attr:
+        for attr, value in self.__dict__.items():
+            if not attr.startswith('_'):
                 yield attr, value
 
-    def get_cname(self):
+    def class_name(self):
         return self.__class__.__name__
 
 
@@ -49,5 +49,16 @@ class AccountGroup(Accounting):
 
     account_class = models.ForeignKey(
         AccountClass,
-        null=True,
-        on_delete=models.SET_NULL)
+        null=False,
+        on_delete=models.CASCADE)
+
+
+class Account(Accounting):
+    """Account."""
+
+    code = models.CharField(max_length=6, unique=True)
+    description = models.CharField(max_length=512, null=True)
+    account_group = models.ForeignKey(
+        AccountGroup,
+        null=False,
+        on_delete=models.CASCADE)

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import AccountClass, AccountGroup
+from .models import AccountClass, AccountGroup, Account
 
 
 class AccountClassAdmin(admin.ModelAdmin):
@@ -11,3 +11,5 @@ class AccountClassAdmin(admin.ModelAdmin):
 admin.site.register(AccountClass, AccountClassAdmin)
 
 admin.site.register(AccountGroup)
+
+admin.site.register(Account)

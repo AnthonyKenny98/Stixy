@@ -3,7 +3,7 @@
 {% block mainContainer %}
 <ul>
     {% for item in list %}
-    <li><a href="{% url 'accounting:detail' item.get_cname item.id %}">{{ item.name }}</a></li>
+    <li><a href="{% url 'accounting:detail' item.class_name item.id %}">{{ item.name }}</a></li>
     {% endfor %}
 </ul>
 {% endblock %}

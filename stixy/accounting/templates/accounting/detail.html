@@ -2,9 +2,12 @@
 
 {% block mainContainer %}
 
+<h1> {{ item.class_name }} </h1>
+<p>
 <ul>
-    <li> Name: {{ item.name }} </li>
-    <li> Account Class: {{ item.account_class.name}} </li>
-    <li> Positive Entry: {{ item.account_class.positive_entry}} </li>
+    {% for attr, val in item %}
+    <li> {{ attr }}: {{ val }} </li>
+    {% endfor %}
 </ul>
+</p>
 {% endblock %}

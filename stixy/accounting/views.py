@@ -3,7 +3,7 @@
 from django.shortcuts import render
 from django.views import generic
 
-from .models import AccountClass, AccountGroup
+from .models import AccountClass, AccountGroup, Account
 
 import sys
 
