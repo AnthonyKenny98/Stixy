@@ -14,6 +14,9 @@ class AccountClassTests(TestCase):
     def test_name(self):
         self.assertEqual(asset.name, 'asset')
 
+    def test_positive_entry(self):
+        self.assertEqual(asset.positive_entry, 'debit')
+
 
 class AssetGroupModelTests(TestCase):
     """Test AssetGroup Model."""
