@@ -3,11 +3,9 @@
 from django.shortcuts import render
 from django.views import generic
 
-from .models import AccountClass, AccountGroup, Account, SubAccount
+from .models import *  # noqa: F403
 
 import sys
-
-
 
 def index(request):
     context = {}
@@ -17,7 +15,6 @@ def index(request):
 def table(request, model):
     Model = getattr(sys.modules[__name__], model)
     context = {
-        'tableName': Model.__name__,
         'data': Model.objects.order_by('name')
     }
     return render(request, 'accounting/table.html', context)
