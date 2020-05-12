@@ -101,11 +101,14 @@ class SubAccount(_Account):
         verbose_name = "Sub-Account"
         verbose_name_plural = "Sub-Accounts"
 
+
 class BankAccount(_Account):
+    """Bank Account."""
 
     number = models.PositiveIntegerField("Bank Account Number", unique=True)
 
     class Meta:
+        """Define Meta Attributes."""
 
         verbose_name = "Bank Account"
         verbose_name_plural = "Bank Accounts"

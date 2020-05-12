@@ -1,10 +1,14 @@
+"""Admin Settings for Accounting App."""
 from django.contrib import admin
 
 # Register your models here.
-from .models import *
+from .models import AccountClass, AccountGroup, \
+    Account, SubAccount, BankAccount
 
 
 class AccountClassAdmin(admin.ModelAdmin):
+    """Admin settings for Account Class."""
+
     fields = ['name', 'positive_entry']
 
 
