@@ -2,7 +2,8 @@
 from django.db import models
 
 
-class Accounting(models.Model):
+class _Accounting(models.Model):
+    """Base Class."""
     name = models.CharField(max_length=200)
 
     class Meta:
@@ -21,10 +22,11 @@ class Accounting(models.Model):
                 yield attr, value
 
     def class_name(self):
+        """Return name of class."""
         return self.__class__.__name__
 
 
-class AccountClass(Accounting):
+class AccountClass(_Accounting):
     """Broad Account Classes - Intended for DAXLIC but can have others."""
 
     positive_entry = models.CharField("Positive Entry", max_length=200)
@@ -39,7 +41,7 @@ class AccountClass(Accounting):
         return self.name == 'Asset'
 
 
-class AccountGroup(Accounting):
+class AccountGroup(_Accounting):
     """Broad Groups for Accounts."""
 
     class Meta:
@@ -53,7 +55,7 @@ class AccountGroup(Accounting):
         on_delete=models.CASCADE)
 
 
-class Account(Accounting):
+class Account(_Accounting):
     """Account."""
 
     code = models.CharField(max_length=6, unique=True)
@@ -62,3 +64,10 @@ class Account(Accounting):
         AccountGroup,
         null=False,
         on_delete=models.CASCADE)
+
+
+class SubAccount(_Accounting):
+    """Sub Account."""
+
+    code = models.CharField(max_length=4, unique=True)
+    description = models.CharField(max_length=512, null=True)
