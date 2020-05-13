@@ -2,6 +2,20 @@
 from django.db import models
 
 
+def defaultforeignkey(model, null=False):
+    """
+    Default foreign key function.
+
+    This is just to save some lines of code and keep things simple.
+    Null attribute can be overridden but defaults to False.
+    """
+    return models.ForeignKey(
+        model,
+        verbose_name=model().verbose_class_name(),
+        null=False,
+        on_delete=models.PROTECT)
+
+
 class _Accounting(models.Model):
     """Base Class."""
 
@@ -10,15 +24,9 @@ class _Accounting(models.Model):
 
         abstract = True
 
-    def __str__(self):
-        """String Representation of Class."""
-        return self.name
-
     def __iter__(self):
-        """Iterate through attributes of Class."""
-        for attr, value in self.__dict__.items():
-            if not attr.startswith('_'):
-                yield self._meta.get_field(attr).verbose_name, value
+        for field in self._meta.fields:
+            yield field.verbose_name, getattr(self, field.name)
 
     def class_name(self):
         """Return name of class."""
@@ -42,6 +50,10 @@ class _Account(_Accounting):
 
         abstract = True
 
+    def __str__(self):
+        """String Representation of Class."""
+        return self.name
+
 
 class AccountClass(_Account):
     """Broad Account Classes - Intended for DAXLIC but can have others."""
@@ -58,11 +70,7 @@ class AccountClass(_Account):
 class AccountGroup(_Account):
     """Broad Groups for Accounts."""
 
-    account_class = models.ForeignKey(
-        AccountClass,
-        verbose_name=AccountClass.verbose_class_name,
-        null=False,
-        on_delete=models.CASCADE)
+    account_class = defaultforeignkey(AccountClass)
 
     class Meta:
         """Define Meta Attributes."""
@@ -76,11 +84,7 @@ class Account(_Account):
 
     code = models.CharField("Account Code", max_length=6, unique=True)
     description = models.CharField("Description", max_length=512, null=True)
-    account_group = models.ForeignKey(
-        AccountGroup,
-        verbose_name=AccountGroup.verbose_class_name,
-        null=False,
-        on_delete=models.CASCADE)
+    account_group = defaultforeignkey(AccountGroup)
 
     class Meta:
         """Define Meta Attributes."""
@@ -113,4 +117,29 @@ class BankAccount(_Account):
         verbose_name = "Bank Account"
         verbose_name_plural = "Bank Accounts"
 
+
+# class Entry(_Accounting):
+#     """A Single Accounting Entry."""
+
+#     account = models.ForeignKey(
+#         Account,
+#         verbose_name=Account.verbose_class_name,
+#         null=False,
+#         on_delete=models.PROTECT)
+
+#     sub_account = models.ForeignKey(
+#         SubAccount,
+#         verbose_name=SubAccount.verbose_class_name,
+#         null=False,
+#         on_delete=models.PROTECT)
+
+#     debit = models.FloatField("Debit Amount")
+#     credit = models.FloatField("Credit Amount")
+
 # class Transaction(_Accounting):
+#     """A double entry transaction."""
+
+#     date = models.DateField("Transaction Date")
+#     description = models.TextField("Transaction Description")
+
+
