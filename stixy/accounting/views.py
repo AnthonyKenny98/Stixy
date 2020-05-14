@@ -2,7 +2,8 @@
 # from django.http import HttpResponse
 from django.shortcuts import render
 
-from .models import *  # noqa: F403 F401
+from .models import AccountClass, AccountGroup, \
+    Account, SubAccount, BankAccount, Transaction, Entry  # noqa: F401
 
 import sys
 
@@ -17,7 +18,8 @@ def table(request, model):
     """Table View."""
     Model = getattr(sys.modules[__name__], model)  # noqa: N806
     context = {
-        'data': Model.objects.order_by('name')
+        'meta': Model,
+        'data': Model.objects.all()
     }
     return render(request, 'accounting/table.html', context)
 

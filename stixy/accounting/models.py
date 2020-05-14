@@ -2,7 +2,7 @@
 from django.db import models
 
 
-def defaultforeignkey(model, null=False):
+def defaultforeignkey(model, null=False, related_name=None):
     """
     Default foreign key function.
 
@@ -12,6 +12,7 @@ def defaultforeignkey(model, null=False):
     return models.ForeignKey(
         model,
         verbose_name=model().verbose_class_name(),
+        related_name=related_name,
         null=False,
         on_delete=models.PROTECT)
 
@@ -118,28 +119,35 @@ class BankAccount(_Account):
         verbose_name_plural = "Bank Accounts"
 
 
-# class Entry(_Accounting):
-#     """A Single Accounting Entry."""
+class Transaction(_Accounting):
+    """A double entry transaction."""
 
-#     account = models.ForeignKey(
-#         Account,
-#         verbose_name=Account.verbose_class_name,
-#         null=False,
-#         on_delete=models.PROTECT)
+    date = models.DateField("Transaction Date")
+    description = models.TextField("Transaction Description")
 
-#     sub_account = models.ForeignKey(
-#         SubAccount,
-#         verbose_name=SubAccount.verbose_class_name,
-#         null=False,
-#         on_delete=models.PROTECT)
+    class Meta:
+        """Define Meta Attributes."""
 
-#     debit = models.FloatField("Debit Amount")
-#     credit = models.FloatField("Credit Amount")
-
-# class Transaction(_Accounting):
-#     """A double entry transaction."""
-
-#     date = models.DateField("Transaction Date")
-#     description = models.TextField("Transaction Description")
+        verbose_name = "Transaction"
+        verbose_name_plural = "Transactions"
 
 
+class Entry(_Accounting):
+    """A Single Accounting Entry."""
+
+    account = defaultforeignkey(Account)
+
+    sub_account = defaultforeignkey(SubAccount)
+
+    debit = models.FloatField("Debit Amount")
+    credit = models.FloatField("Credit Amount")
+
+    transaction = defaultforeignkey(
+        Transaction,
+        related_name='entries')
+
+    class Meta:
+        """Define Meta Attributes."""
+
+        verbose_name = "Entry"
+        verbose_name_plural = "Entries"
