@@ -2,7 +2,7 @@
 # from django.http import HttpResponse
 from django.shortcuts import render
 
-from . import models as app_models  # noqa: F403 F401
+from . import models as app_models
 
 
 def index(request):
@@ -13,7 +13,7 @@ def index(request):
 
 def table(request, model):
     """Table View."""
-    model_class = getattr(app_models, model)  # noqa: N806
+    model_class = getattr(app_models, model)
     context = {
         'meta': model_class,
         'data': model_class.objects.all()
@@ -24,7 +24,7 @@ def table(request, model):
 def list(request, model):
     """List View."""
     # Get Model Class from model param
-    model_class = getattr(app_models, model)  # noqa: N806
+    model_class = getattr(app_models, model)
     context = {'list': model_class.objects.order_by('name')}
     return render(request, 'accounting/list.html', context)
 
@@ -32,6 +32,6 @@ def list(request, model):
 def detail(request, model, pk):
     """Detail View."""
     # Get Model Class from model param
-    model_class = getattr(app_models, model)  # noqa: N806
+    model_class = getattr(app_models, model)
     context = {'item': model_class.objects.get(pk=pk)}
     return render(request, 'accounting/detail.html', context)
