@@ -1,5 +1,6 @@
 """Models for Accounting App."""
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 def defaultforeignkey(model, null=False, related_name=None):
@@ -14,7 +15,8 @@ def defaultforeignkey(model, null=False, related_name=None):
         verbose_name=model().verbose_class_name(),
         related_name=related_name,
         null=False,
-        on_delete=models.PROTECT)
+        # on_delete=models.PROTECT)
+        on_delete=models.CASCADE)
 
 
 class _Accounting(models.Model):
@@ -59,13 +61,25 @@ class _Account(_Accounting):
 class AccountClass(_Account):
     """Broad Account Classes - Intended for DAXLIC but can have others."""
 
-    positive_entry = models.CharField("Positive Entry", max_length=200)
+    positive_entry = models.CharField(
+        "Positive Entry",
+        max_length=200,
+        choices=[
+            ('DR', 'Debit'),
+            ('CR', 'Credit')
+        ])
 
     class Meta:
         """Define Meta Attributes."""
 
         verbose_name = 'Account Class'
         verbose_name_plural = 'Account Classes'
+
+    def clean(self):
+        """Validate Model as a whole."""
+        # Dummy - don't allow something called 'Drawings'
+        if self.name.lower() == 'drawings':
+            raise ValidationError('Account Class Name cannot be "Drawings"')
 
 
 class AccountGroup(_Account):
@@ -124,12 +138,21 @@ class Transaction(_Accounting):
 
     date = models.DateField("Transaction Date")
     description = models.TextField("Transaction Description")
+    amount = models.FloatField("Transaction Amount")
 
     class Meta:
         """Define Meta Attributes."""
 
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
+
+    def clean(self, entries=None):
+        """Validate correctness of transaction."""
+        if self.amount < 0:
+            raise ValidationError({'amount': ('Amount cannot be negative')})
+        # if len(self.entries.all()) < 2:
+        #     raise ValidationError(
+        #         ('Each transaction requires a minimum of 2 entries'))
 
 
 class Entry(_Accounting):
