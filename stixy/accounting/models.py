@@ -1,6 +1,5 @@
 """Models for Accounting App."""
 from django.db import models
-from django.core.exceptions import ValidationError
 
 
 def defaultforeignkey(model, null=False, related_name=None):
@@ -75,12 +74,6 @@ class AccountClass(_Account):
         verbose_name = 'Account Class'
         verbose_name_plural = 'Account Classes'
 
-    def clean(self):
-        """Validate Model as a whole."""
-        # Dummy - don't allow something called 'Drawings'
-        if self.name.lower() == 'drawings':
-            raise ValidationError('Account Class Name cannot be "Drawings"')
-
 
 class AccountGroup(_Account):
     """Broad Groups for Accounts."""
@@ -146,13 +139,19 @@ class Transaction(_Accounting):
         verbose_name = "Transaction"
         verbose_name_plural = "Transactions"
 
-    def clean(self, entries=None):
-        """Validate correctness of transaction."""
-        if self.amount < 0:
-            raise ValidationError({'amount': ('Amount cannot be negative')})
-        # if len(self.entries.all()) < 2:
-        #     raise ValidationError(
-        #         ('Each transaction requires a minimum of 2 entries'))
+    @property
+    def short_description(self):
+        return self.description.split('\n')[0]
+
+    def __iter__(self):
+        data = {
+            'Date': self.date,
+            'Description': self.short_description,
+            'Amount': self.amount,
+            'Entries': list(self.entries.all())
+        }
+        for key, val in data.items():
+            yield key, val
 
 
 class Entry(_Accounting):
@@ -174,3 +173,14 @@ class Entry(_Accounting):
 
         verbose_name = "Entry"
         verbose_name_plural = "Entries"
+
+
+    def __iter__(self):
+        data = {
+            'Account': self.account,
+            'SubAccount': self.sub_account,
+            'Debit': self.debit,
+            'Credit': self.credit
+        }
+        for key, val in data.items():
+            yield key, val

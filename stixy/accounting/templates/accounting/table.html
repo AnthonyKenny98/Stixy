@@ -1,4 +1,5 @@
 {% extends 'accounting/base.html' %}
+{% load app_filters %}
 
 <!-- Scripts for table -->
 
@@ -8,39 +9,48 @@
 
 {% if data %}
 
-<!-- CARD -->
-<div class="card mb-3">
-  
-  <!-- CARD HEADER -->
-  <div class="card-header">
-    <i class="fas fa-table"></i>
-    {{ tableName }}
-  </div>
-
-  <!-- CARD BODY -->
-  <div class="card-body">
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover" width="100%" cellspacing="0">
-        <thead>
-            <tr>
-                {% for attr, val in data.0 %}
-                <td> <b>{{ attr }} </b></td>
-                {% endfor %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for item in data %}
+<div class="table-responsive">
+  <table class="table table-bordered table-hover" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            {% for attr, val in data.0 %}
+            <td> <b>{{ attr }} </b></td>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in data %}
             <tr class="row-clickable" data-href="{% url 'accounting:detail' item.class_name item.id %}">
                 {% for attr, val in item %}
-                <td> {{ val }}</td>
+                  
+                  <td> 
+                    {% if not val|islist %}
+                      {{ val }}
+                    {% else %}
+                      <table>
+                        <tbody>
+                          {% for item in val %}
+                          <tr>
+                            {% for attr, val in item %}
+                              <td>
+                                {{ val }}
+                              </td>
+                            {% endfor %}
+                          </tr>
+                          {% endfor %}
+                        </tbody>
+                      </table>
+                  </td>
+
+                  {% endif %}
                 {% endfor %}
             </tr>
-            {% endfor %}
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div> 
+        {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+ 
 
 {% else %}
 

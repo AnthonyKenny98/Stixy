@@ -64,7 +64,7 @@ class EntryInlineFormSet(BaseInlineFormSet):
                 credits += form.cleaned_data['credit']
                 entries += 1
 
-                if debits != 0 or credits != 0:
+                if form.cleaned_data['debit'] != 0 and form.cleaned_data['credit'] != 0:
                     raise ValidationError((
                         'One of credits or debits must be equal to 0.'))
         # DO TOTAL INLINES CHECK
@@ -91,7 +91,7 @@ class EntryInline(admin.TabularInline):
 class TransactionAdmin(admin.ModelAdmin):
     """Admin settings for Transaction Class."""
 
-    list_display = ['id', 'date', 'description']
+    list_display = ['id', 'date', 'short_description', 'amount']
 
     inlines = [EntryInline]
 
